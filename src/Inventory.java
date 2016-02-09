@@ -14,9 +14,9 @@ public class Inventory {
 
             int i = 1;
             for (InventoryItem item : items) {
-                System.out.println(i + " [" + item.quantity + "]" + ". " + item.name);
+                System.out.printf("%d. %s: [%s] %s\n\n", i, item.category, item.quantity, item.name);
+                i++;
             }
-            System.out.println();
             System.out.println("1. Add new item.");
             System.out.println("2. Remove item.");
             System.out.println("3. Update item quantity");
@@ -26,9 +26,12 @@ public class Inventory {
             switch (option) {
 
                 case "1":
+
                     System.out.print("Enter new item: ");
-                    String text = scanner.nextLine();
-                    items.add(new InventoryItem(text, "0"));
+                    String name = scanner.nextLine();
+                    System.out.printf("Enter the quantity of %ss: ", name);
+                    String quantity = scanner.nextLine();
+                    items.add(Inventory.createItem(name, quantity));
                     break;
 
                 case "2":
@@ -38,10 +41,10 @@ public class Inventory {
                     break;
 
                 case "3":
-                    System.out.print("Enter the index number of the item you would like to increase: ");
+                    System.out.print("Enter the index number of the item you would like to update: ");
                     itemNum = Integer.valueOf(scanner.nextLine());
                     InventoryItem itemChoice = items.get(itemNum - 1);
-                    System.out.print("How much would you like to add to " + itemChoice + ": ");
+                    System.out.printf("How much would you like to add to %s: ", itemChoice);
                     itemChoice.quantity = scanner.nextLine();
                     break;
 
@@ -50,5 +53,29 @@ public class Inventory {
                     break;
             }
         }
+    }
+    static InventoryItem createItem(String name, String quantity) {
+        System.out.printf("Enter %s's category: ", name);
+        String category = scanner.nextLine();
+        if (category.equalsIgnoreCase("Fruit")) {
+            return new Fruit(name, quantity);
+        }
+        else if (category.equalsIgnoreCase("Meat")) {
+            return new Meat(name, quantity);
+        }
+        else if (category.equalsIgnoreCase("Animal")) {
+            return new Animal(name, quantity);
+        }
+        else if (category.equalsIgnoreCase("Cereal")) {
+            return new Cereal(name, quantity);
+        }
+        else if (category.equalsIgnoreCase("Hat")) {
+            return new Hat(name, quantity);
+        }
+        else {
+            System.out.println("Invalid Category!!!");
+            return createItem(name, quantity);
+        }
+
     }
 }
