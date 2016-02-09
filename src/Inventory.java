@@ -63,7 +63,9 @@ public class Inventory {
                         System.out.println("Invalid Response!!!");
                     }
                 }
-            } else {
+            }
+
+            else {
                 System.out.println("Invalid user name/password");
             }
         }
