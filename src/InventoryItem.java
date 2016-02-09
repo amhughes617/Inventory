@@ -1,11 +1,15 @@
 /**
  * Created by alexanderhughes on 2/8/16.
  */
-public class ItemMg {
+public class InventoryItem {
     String name;
     String quantity;
+    String category;
 
-    public ItemMg(String name, String quantity) {
+    public InventoryItem() {
+    }
+
+    public InventoryItem(String name, String quantity) {
         this.name = name;
         this.quantity = quantity;
     }

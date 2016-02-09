@@ -6,16 +6,15 @@ import java.util.Scanner;
  */
 public class Inventory {
 
-    public static ArrayList<ItemMg> items = new ArrayList<>();
+    public static ArrayList<InventoryItem> items = new ArrayList<>();
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         while (true) {
 
             int i = 1;
-            for (ItemMg item : items) {
+            for (InventoryItem item : items) {
                 System.out.println(i + " [" + item.quantity + "]" + ". " + item.name);
-                i++;
             }
             System.out.println();
             System.out.println("1. Add new item.");
@@ -29,7 +28,7 @@ public class Inventory {
                 case "1":
                     System.out.print("Enter new item: ");
                     String text = scanner.nextLine();
-                    items.add(new ItemMg(text, "0"));
+                    items.add(new InventoryItem(text, "0"));
                     break;
 
                 case "2":
@@ -41,8 +40,8 @@ public class Inventory {
                 case "3":
                     System.out.print("Enter the index number of the item you would like to increase: ");
                     itemNum = Integer.valueOf(scanner.nextLine());
-                    ItemMg itemChoice = items.get(itemNum - 1);
-                    System.out.print("How much would you like to add to " + itemChoice.name + ": ");
+                    InventoryItem itemChoice = items.get(itemNum - 1);
+                    System.out.print("How much would you like to add to " + itemChoice + ": ");
                     itemChoice.quantity = scanner.nextLine();
                     break;
 
