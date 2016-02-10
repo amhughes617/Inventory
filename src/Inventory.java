@@ -19,54 +19,78 @@ public class Inventory {
 
         while (true) {
 
-            System.out.print("Please enter user name: ");
+            System.out.print("Please enter user name to login: ");
             String userName = scanner.nextLine();
-            System.out.print("Please enter password: ");
-            String userPass = scanner.nextLine();
-            if (accounts.containsKey(userName) && accounts.get(userName).password.equals(userPass)) {
-                System.out.printf("Welcome %s\n", userName);
 
-                while (true) {
+            if (accounts.containsKey(userName)) {   //this checks if userName account exists if not goes to else statement
 
-                    int i = 1;
-                    for (InventoryItem item : accounts.get(userName).items) {
-                        System.out.printf("%d. %s: [%s] %s\n\n", i, item.category, item.quantity, item.name);
-                        i++;
-                    }
-                    System.out.println("1. Add new item");
-                    System.out.println("2. Remove item");
-                    System.out.println("3. Update item quantity");
-                    System.out.println("4. Logout");
+                System.out.print("Please enter password: ");
+                String userPass = scanner.nextLine();
 
-                    String option = scanner.nextLine();
+                if (accounts.get(userName).password.equals(userPass)) {
 
-                    if (option.equals("1")) {
-                        System.out.print("Enter new item: ");
-                        String name = scanner.nextLine();
-                        System.out.printf("Enter the quantity of %ss: ", name);
-                        String quantity = scanner.nextLine();
-                        accounts.get(userName).items.add(Inventory.createItem(name, quantity));
-                    } else if (option.equals("2")) {
-                        System.out.print("Enter the index number of the item you want to remove: ");
-                        int itemNum = Integer.valueOf(scanner.nextLine());
-                        accounts.get(userName).items.remove(itemNum - 1);
-                    } else if (option.equals("3")) {
-                        System.out.print("Enter the index number of the item you would like to update: ");
-                        int itemNum = Integer.valueOf(scanner.nextLine());
-                        InventoryItem itemChoice = accounts.get(userName).items.get(itemNum - 1);
-                        System.out.printf("How much would you like to add to %s: ", itemChoice);
-                        itemChoice.quantity = scanner.nextLine();
-                    } else if (option.equals("4")) {
-                        System.out.printf("Goodbye %s\n", userName);
-                        break;
-                    } else {
-                        System.out.println("Invalid Response!!!");
+                    System.out.printf("Welcome %s\n", userName);
+
+                    while (true) {
+
+                        int i = 1;
+                        for (InventoryItem item : accounts.get(userName).items) {
+                            System.out.printf("%d. %s: [%s] %s\n\n", i, item.category, item.quantity, item.name);
+                            i++;
+                        }
+                        System.out.println("1. Add new item");
+                        System.out.println("2. Remove item");
+                        System.out.println("3. Update item quantity");
+                        System.out.println("4. Logout");
+
+                        String option = scanner.nextLine();
+
+                        if (option.equals("1")) {
+                            System.out.print("Enter new item: ");
+                            String name = scanner.nextLine();
+                            System.out.printf("Enter the quantity of %ss: ", name);
+                            String quantity = scanner.nextLine();
+                            accounts.get(userName).items.add(Inventory.createItem(name, quantity));
+                        }
+                        else if (option.equals("2")) {
+                            System.out.print("Enter the index number of the item you want to remove: ");
+                            int itemNum = Integer.valueOf(scanner.nextLine());
+                            accounts.get(userName).items.remove(itemNum - 1);
+                        }
+                        else if (option.equals("3")) {
+                            System.out.print("Enter the index number of the item you would like to update: ");
+                            int itemNum = Integer.valueOf(scanner.nextLine());
+                            InventoryItem itemChoice = accounts.get(userName).items.get(itemNum - 1);
+                            System.out.printf("How much would you like to add to %s: ", itemChoice);
+                            itemChoice.quantity = scanner.nextLine();
+                        }
+                        else if (option.equals("4")) {
+                            System.out.printf("Goodbye %s\n", userName);
+                            break;
+                        }
+                        else {
+                            System.out.println("Invalid Response!!!");
+                        }
                     }
                 }
+                else {
+                    System.out.println("Invalid user name/password");
+                }
             }
+            else {  //allows user to choose to create new account if they want
+                System.out.printf("An account for %s does not exist, would you like to create a new account? [y/n] ", userName);
+                String yOrN = scanner.nextLine();
+                switch (yOrN) {
+                    case "y":
+                        System.out.printf("Please enter a new password for %s: ", userName);
+                        String userPass = scanner.nextLine();
+                        accounts.put(new Account(userName,userPass).name, new Account(userName, userPass));
+                        break;
+                    case "n":
+                        System.out.println("Goodbye");
+                        break;
+                }
 
-            else {
-                System.out.println("Invalid user name/password");
             }
         }
     }
