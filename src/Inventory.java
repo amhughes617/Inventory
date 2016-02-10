@@ -61,7 +61,7 @@ public class Inventory {
                             System.out.print("Enter the index number of the item you would like to update: ");
                             int itemNum = Integer.valueOf(scanner.nextLine());
                             InventoryItem itemChoice = accounts.get(userName).items.get(itemNum - 1);
-                            System.out.printf("How much would you like to add to %s: ", itemChoice);
+                            System.out.printf("How much would you like to add to %s: ", itemChoice.name);
                             itemChoice.quantity = scanner.nextLine();
                         }
                         else if (option.equals("4")) {
